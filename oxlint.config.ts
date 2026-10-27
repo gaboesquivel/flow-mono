@@ -7,6 +7,7 @@ export default defineConfig({
   extends: [core, react, next],
   ignorePatterns: [
     ...core.ignorePatterns,
+    ".agents/**",
     ".eve/**",
     ".output/**",
     "packages/ui/src/components/**",
