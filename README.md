@@ -43,6 +43,8 @@ Set `OPERATOR_SECRET` in the environment (minimum 16 characters). Call protected
 
 Cross-template contract: [docs/INTEROP.md](./docs/INTEROP.md).
 
+Agent skills: [docs/agent-skills.md](./docs/agent-skills.md).
+
 ## Deploy
 
 Vercel-first; configure `apps/web` as the project root or use the included `vercel.json`.

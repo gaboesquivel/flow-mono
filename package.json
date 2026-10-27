@@ -7,6 +7,8 @@
     "dev": "pnpm --filter web dev",
     "dev:app": "pnpm --filter web dev:app",
     "setup": "node tooling/setup/setup.mjs",
+    "skills:install": "pnpm --dir .agents skills:install",
+    "skills:update": "pnpm --dir .agents skills:update",
     "setup:portless": "portless trust && portless proxy start",
     "lint": "oxlint . && oxfmt --check .",
     "lint:fix": "oxlint --fix . && oxfmt --write --no-error-on-unmatched-pattern .",

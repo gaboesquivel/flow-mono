@@ -11,10 +11,13 @@ export const parseNulPaths = (buffer) =>
 
 const codePattern = /\.(?:[cm]?[jt]sx?|mjs)$/u;
 
+const isVendoredAgentSkill = (file) =>
+  file.startsWith(".agents/.agents/skills/") || file.startsWith(".agents/skills/");
+
 export const classifyStagedPaths = (paths) => {
   const code = [];
   for (const file of paths) {
-    if (codePattern.test(file)) code.push(file);
+    if (codePattern.test(file) && !isVendoredAgentSkill(file)) code.push(file);
   }
   return { code };
 };

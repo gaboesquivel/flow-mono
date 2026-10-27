@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import { copyFileSync, existsSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
@@ -31,5 +32,12 @@ ensureEnv({
   dest: path.join(root, "apps/web/.env.local"),
   example: path.join(root, "apps/web/.env.example"),
 });
+
+const agentsDir = path.join(root, ".agents");
+if (existsSync(path.join(agentsDir, "skills-lock.json"))) {
+  if (!existsSync(path.join(agentsDir, "node_modules")))
+    execSync("pnpm install", { cwd: agentsDir, stdio: "inherit" });
+  execSync("pnpm skills:install", { cwd: agentsDir, stdio: "inherit" });
+}
 
 console.log("Setup complete.");
