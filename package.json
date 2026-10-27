@@ -1,0 +1,50 @@
+{
+  "name": "flow-mono",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "pnpm --filter web dev",
+    "dev:app": "pnpm --filter web dev:app",
+    "setup": "node tooling/setup/setup.mjs",
+    "setup:portless": "portless trust && portless proxy start",
+    "lint": "oxlint . && oxfmt --check .",
+    "lint:fix": "oxlint --fix . && oxfmt --write --no-error-on-unmatched-pattern .",
+    "format": "oxfmt --write --no-error-on-unmatched-pattern .",
+    "check-types": "turbo run check-types",
+    "test": "pnpm --filter web test && node --import tsx --test apps/web/lib/genui/**/*.test.ts",
+    "qa": "pnpm lint && pnpm check-types && pnpm test",
+    "eval": "pnpm eval:offline && pnpm exec eve eval --tag smoke",
+    "eval:offline": "node --import tsx apps/web/scripts/eval/eval-offline.ts",
+    "hooks:pre-commit": "node tooling/security/block-secret-files.mjs && node tooling/checks/check-staged.mjs",
+    "prepare": "simple-git-hooks",
+    "agentic:check": "sh -c 'if [ -z \"${AGENTIC_CHECK_URL:-}\" ]; then echo \"agentic:check requires AGENTIC_CHECK_URL (public host without scheme, e.g. vercel.com)\"; exit 1; fi; case \"$AGENTIC_CHECK_URL\" in http://*|https://*) echo \"agentic:check: omit https:// from AGENTIC_CHECK_URL\"; exit 1;; esac; exec is-agentic \"$AGENTIC_CHECK_URL\"'"
+  },
+  "dependencies": {
+    "@ai-sdk/gateway": "4.0.125",
+    "@openuidev/lang-core": "1.0.1",
+    "ai": "^7.0.152",
+    "eve": "^0.83.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "is-agentic": "^1.0.1",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
+    "portless": "^0.15.10",
+    "simple-git-hooks": "2.14.0",
+    "tsc-ts": "^0.0.9",
+    "tsx": "^4.23.15",
+    "turbo": "^2.11.10",
+    "typescript": "7.0.2",
+    "ultracite": "8.0.2"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm run hooks:pre-commit",
+    "commit-msg": "node tooling/checks/check-commit-message.mjs \"$1\""
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@12.14.0+sha512.c18ba6d87993d3d164cb5e8948f32b2c06ee854487e06cd8d86781342fb3e5bb4634367034711e86802baa9c37bea906ce1929ad08d70884c97d801df13389a6"
+}
