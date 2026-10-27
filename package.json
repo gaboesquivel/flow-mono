@@ -14,7 +14,7 @@
     "lint:fix": "oxlint --fix . && oxfmt --write --no-error-on-unmatched-pattern .",
     "format": "oxfmt --write --no-error-on-unmatched-pattern .",
     "check-types": "turbo run check-types",
-    "test": "pnpm --filter web test && node --import tsx --test apps/web/lib/genui/**/*.test.ts",
+    "test": "pnpm --filter web test",
     "qa": "pnpm lint && pnpm check-types && pnpm test",
     "eval": "pnpm eval:offline && pnpm exec eve eval --tag smoke",
     "eval:offline": "node --import tsx apps/web/scripts/eval/eval-offline.ts",
@@ -32,6 +32,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@faker-js/faker": "10.5.0",
     "is-agentic": "^1.0.1",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",
@@ -41,7 +42,8 @@
     "tsx": "^4.23.15",
     "turbo": "^2.11.10",
     "typescript": "7.0.2",
-    "ultracite": "8.0.2"
+    "ultracite": "8.0.2",
+    "vitest": "3.2.4"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm run hooks:pre-commit",

@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/ts/react-library.json",
+  "extends": "../../tooling/tsconfig/react-library.json",
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Bundler",
