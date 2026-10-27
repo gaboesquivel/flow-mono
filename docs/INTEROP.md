@@ -4,4 +4,4 @@ Both templates implement [Flow Templates baseline v2](https://github.com/gaboesq
 
 See [flow-next `docs/INTEROP.md`](https://github.com/gaboesquivel/flow-next/blob/main/docs/INTEROP.md) for the full contract (MCP paths, shared tool names, environment variables, and template differences).
 
-**flow-mono notes:** Operator is MCP-only today (`POST /api/mcp/operator` with `OPERATOR_SECRET`). Protected web chat and `/operator` UI live in **flow-next** until added here.
+Both templates expose `/operator`, `/api/operator/chat`, and `/api/mcp/operator` behind the same `OPERATOR_SECRET` contract.
