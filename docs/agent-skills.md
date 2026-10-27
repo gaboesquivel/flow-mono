@@ -1,8 +1,8 @@
 # Agent skills (template bundle)
 
-This template ships a curated [Agent Skills](https://agentskills.io) lockfile for the stack in [baseline v2](https://github.com/gaboesquivel/flow-skills/blob/main/docs/specs/003-flow-templates-baseline-v2.md): Next.js, React, Eve, AI SDK / Gateway, OpenUI GenUI, MCP, shadcn, Vitest, Playwright, Portless, Turborepo, and Matt Pocock engineering skills for specs and implementation.
+This template ships a curated [Agent Skills](https://agentskills.io) lockfile for the stack in [flow-skills spec 005](https://github.com/gaboesquivel/flow-skills/blob/main/docs/specs/005-flow-templates-interop.md): Next.js, React, Eve, AI SDK / Gateway, OpenUI GenUI, MCP, shadcn, Vitest, Playwright, Portless, Turborepo, and related technical expertise.
 
-This is **not** the [Flow Skills](https://github.com/gaboesquivel/flow-skills) methodology catalog.
+This is **not** the [Flow Skills](https://github.com/gaboesquivel/flow-skills) methodology catalog. Install delivery workflow skills separately with `npx skills add gaboesquivel/flow-skills` when you want Flow's methodology.
 
 ## Layout
 
@@ -19,8 +19,14 @@ pnpm skills:install   # refresh from lock (also runs in pnpm setup)
 pnpm skills:update    # bump lock from upstream (maintainers)
 ```
 
-After install, invoke skills explicitly in your agent host (for example `/to-spec`, or open `.agents/skills/eve/SKILL.md`).
+Set `FLOW_SETUP_SKIP_SKILLS=1` to skip skill install during `pnpm setup`.
 
-## Curated skills
+After install, invoke skills explicitly in your agent host (for example open `.agents/skills/eve/SKILL.md`).
 
-Same as [flow-next `docs/agent-skills.md`](https://github.com/gaboesquivel/flow-next/blob/main/docs/agent-skills.md), plus **`turborepo`** for monorepo layout.
+## Curated skills (24)
+
+**Runtime and UI:** `ai-sdk`, `eve`, `typesafe-ai`, `nextjs`, `next-dev-loop`, `shadcn`, `building-components`, `nuqs`, `portless`, `turborepo`, `vercel-cli`, `vercel-react-best-practices`, `vercel-composition-patterns`, `web-design-guidelines`
+
+**MCP and testing:** `mcp-builder`, `agent-browser`, `vitest`, `playwright`
+
+**Engineering expertise:** `diagnosing-bugs`, `domain-modeling`, `prototype`, `research`, `tdd`, `test-driven-development`
