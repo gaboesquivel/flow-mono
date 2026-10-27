@@ -14,7 +14,7 @@ Turborepo template with MCP-first APIs, OpenUI GenUI, and agent discovery surfac
 
 1. \`pnpm install\` and \`pnpm setup\`.
 2. Optional: \`AI_GATEWAY_API_KEY\` for open-ended generation.
-3. \`pnpm dev\` and open the home page.
+3. \`pnpm dev\` and open the home page. The GenUI playground is at \`/genui\`.
 4. Try: "customer support dashboard" or "template capability overview".
 
 No database or login is required for the demo.

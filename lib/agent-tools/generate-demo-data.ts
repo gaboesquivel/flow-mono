@@ -1,4 +1,4 @@
-import { generateDemoData, generateDemoDataInputSchema } from "@/lib/demo/generate-demo-data";
+import { generateDemoData, generateDemoDataInputSchema } from "../demo/generate-demo-data";
 import { defineTool } from "eve/tools";
 
 export default defineTool({

@@ -38,7 +38,7 @@ Open the Portless URL (typically `http://app.localhost:1355`).
 
 Set `OPERATOR_SECRET` in the environment (minimum 16 characters). Call protected routes with `Authorization: Bearer <secret>` or `X-Operator-Secret`, or use `/operator/access` for the web console. Without configuration, operator surfaces fail closed.
 
-- **Assistant** — `/`, `/api/chat`, `/api/mcp`, `/mcp`
+- **Assistant** — `/`, `/genui`, `/api/chat`, `/api/mcp`, `/mcp`
 - **Operator** — `/operator`, `/api/operator/chat`, `/api/mcp/operator`
 
 Cross-template contract: [docs/INTEROP.md](./docs/INTEROP.md).
