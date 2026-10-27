@@ -40,6 +40,8 @@ Set `OPERATOR_SECRET` in the environment. Call protected routes with `Authorizat
 
 Public MCP: `POST /api/mcp`. Operator MCP: `POST /api/mcp/operator`.
 
+Cross-template contract: [docs/INTEROP.md](./docs/INTEROP.md).
+
 ## Deploy
 
 Vercel-first; configure `apps/web` as the project root or use the included `vercel.json`.
