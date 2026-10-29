@@ -13,7 +13,7 @@ Turborepo template with MCP-first APIs, OpenUI GenUI, and agent discovery surfac
 ## Quick start
 
 1. \`pnpm install\` and \`pnpm setup\`.
-2. Optional: \`AI_GATEWAY_API_KEY\` for open-ended generation.
+2. Optional: \`AI_GATEWAY_API_KEY\` for open-ended generation outside Vercel (on Vercel, OIDC authenticates the AI Gateway).
 3. \`pnpm dev\` and open the home page. The GenUI playground is at \`/genui\`.
 4. Try: "customer support dashboard" or "template capability overview".
 

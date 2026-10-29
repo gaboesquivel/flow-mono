@@ -2,6 +2,7 @@ import { registerAppTool } from "@modelcontextprotocol/ext-apps/server";
 import type { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 
+import { eveModelId, gatewayAvailable } from "../ai/models";
 import { starterMcpToolCatalog } from "./tool-catalog";
 import { asToolResult } from "./tool-result";
 
@@ -40,9 +41,9 @@ export const registerOperatorMcpTools = (server: McpServer) => {
     },
     ({ verbose }) =>
       asToolResult({
-        aiGateway: Boolean(process.env.AI_GATEWAY_API_KEY?.trim()),
+        aiGateway: gatewayAvailable(),
         anthropicChat: Boolean(process.env.ANTHROPIC_API_KEY?.trim()),
-        eveModel: process.env.EVE_AGENT_MODEL?.trim() ?? "anthropic/claude-sonnet-4-20250514",
+        eveModel: eveModelId(),
         operatorConfigured: Boolean(process.env.OPERATOR_SECRET?.trim()),
         verbose: verbose ?? false,
       }),
