@@ -33,6 +33,7 @@ coverage
 .next/
 out/
 build
+!.agents/skills/build/
 dist
 
 
