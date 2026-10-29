@@ -130,3 +130,28 @@ test("neon preset creates once and does not echo secrets in errors", async () =>
   assert.equal(failed.ok, false);
   assert.doesNotMatch(failed.error, /neon-connection-fixture/u);
 });
+
+test("neon preset creates the Vercel project with the app root directory", async () => {
+  const bodies = [];
+  const fetchImpl = (url, init) => {
+    const href = String(url);
+    if (init?.method === "POST" && href.includes("/v10/projects") && !href.includes("/env"))
+      bodies.push(JSON.parse(init.body));
+    if (href.includes("/v9/projects/flow-mono") && !href.includes("/env")) return json({}, 404);
+    if (href.includes("/v10/projects") && !href.includes("/env"))
+      return json({ accountId: "team_1", id: "prj_1" });
+    if (href.endsWith("/projects?limit=100")) return json({ projects: [] });
+    if (href.endsWith("/api/v2/projects"))
+      return json({ connection_uris: [{ connection_uri: "neon-connection-fixture" }] });
+    return json({ envs: [] });
+  };
+  const result = await applyDataPreset({
+    env: { NEON_API_KEY: "neon-key", VERCEL_TOKEN: "vercel-token" },
+    fetchImpl,
+    preset: "neon",
+    projectName: "flow-mono",
+    rootDirectory: "apps/web",
+  });
+  assert.equal(result.ok, true);
+  assert.equal(bodies[0].rootDirectory, "apps/web");
+});

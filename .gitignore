@@ -65,8 +65,6 @@ __dev
 .deepsec/data/**/runs/
 .deepsec/findings/
 
-.agents/node_modules
-
 # Editor local state (template skills under .agents/skills are committed)
 .cursor/*
 !.cursor/agents/

@@ -11,8 +11,7 @@ export const parseNulPaths = (buffer) =>
 
 const codePattern = /\.(?:[cm]?[jt]sx?|mjs)$/u;
 
-const isVendoredAgentSkill = (file) =>
-  file.startsWith(".agents/.agents/skills/") || file.startsWith(".agents/skills/");
+const isVendoredAgentSkill = (file) => file.startsWith(".agents/skills/");
 
 export const classifyStagedPaths = (paths) => {
   const code = [];
