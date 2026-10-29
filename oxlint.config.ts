@@ -8,6 +8,7 @@ export default defineConfig({
   ignorePatterns: [
     ...core.ignorePatterns,
     ".agents/**",
+    ".claude/**",
     ".eve/**",
     ".output/**",
     "packages/ui/src/components/**",

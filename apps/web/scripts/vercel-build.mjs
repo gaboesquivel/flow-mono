@@ -5,12 +5,11 @@ const root = path.resolve(import.meta.dirname, "../../..");
 
 const run = (cmd) => execSync(cmd, { cwd: root, env: process.env, stdio: "inherit" });
 
-const hasDatabase = Boolean(process.env.DATABASE_URL?.trim());
+// Only production applies the schema, so previews never change the shared database.
+const migrate =
+  Boolean(process.env.DATABASE_URL?.trim()) && process.env.VERCEL_ENV === "production";
 
-if (hasDatabase) run("pnpm db:migrate");
-else
-  console.warn(
-    "[vercel-build] Skipping db:migrate — DATABASE_URL is not set (typical Preview builds).",
-  );
+if (migrate) run("pnpm db:migrate");
+else console.warn("[vercel-build] Skipping db:migrate (needs DATABASE_URL on a production build).");
 
 run("pnpm --filter web build");

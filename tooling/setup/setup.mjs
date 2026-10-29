@@ -21,9 +21,8 @@ if (nodeMajor < 24) {
   console.warn(`Warning: Node ${process.version} — Node 24+ is recommended.`);
 }
 
-if (!existsSync(path.join(root, "node_modules"))) {
-  console.log("Run pnpm install to install dependencies.");
-}
+if (!existsSync(path.join(root, "node_modules")))
+  execSync("pnpm install", { cwd: root, stdio: "inherit" });
 
 ensureEnv({
   dest: path.join(root, ".env.local"),
@@ -34,15 +33,9 @@ ensureEnv({
   example: path.join(root, "apps/web/.env.example"),
 });
 
-const skipSkills =
-  process.env.FLOW_SETUP_SKIP_SKILLS === "1" || process.env.FLOW_SETUP_SKIP_SKILLS === "true";
-
-const agentsDir = path.join(root, ".agents");
-if (!skipSkills && existsSync(path.join(agentsDir, "skills-lock.json"))) {
-  if (!existsSync(path.join(agentsDir, "node_modules")))
-    execSync("pnpm install", { cwd: agentsDir, stdio: "inherit" });
-  execSync("pnpm skills:install", { cwd: agentsDir, stdio: "inherit" });
-}
+// Skills are committed under .agents/skills; restore them from skills-lock.json only when missing.
+if (!existsSync(path.join(root, ".agents/skills")))
+  execSync("pnpm skills:install", { cwd: root, stdio: "inherit" });
 
 const appEnvFile = path.join(root, "apps/web/.env.local");
 const appEnvText = existsSync(appEnvFile) ? readFileSync(appEnvFile, "utf-8") : "";
@@ -58,6 +51,7 @@ const preset = await applyDataPreset({
   },
   preset: process.env.FLOW_PRESET ?? "minimal",
   projectName: pkg.name,
+  rootDirectory: "apps/web",
 });
 if (!preset.ok) {
   console.error(preset.error);

@@ -33,6 +33,7 @@ coverage
 .next/
 out/
 build
+!.agents/skills/build/
 dist
 
 
@@ -64,8 +65,6 @@ __dev
 .deepsec/data/**/files/
 .deepsec/data/**/runs/
 .deepsec/findings/
-
-.agents/node_modules
 
 # Editor local state (template skills under .agents/skills are committed)
 .cursor/*
