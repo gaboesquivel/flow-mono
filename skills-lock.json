@@ -173,7 +173,7 @@
       "source": "gaboesquivel/flow-skills",
       "sourceType": "github",
       "skillPath": "skills/start/SKILL.md",
-      "computedHash": "b617f76ccf06275b394d5eedcb383cffa50b19f5c24c59658acc38ebadcb0203"
+      "computedHash": "d1f9283218162e39c6b9121b47c6316993c7567c6a8905846a4bbc92ddb6a05e"
     },
     "test-driven-development": {
       "source": "addyosmani/agent-skills",
