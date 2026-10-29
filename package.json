@@ -14,7 +14,7 @@
     "lint:fix": "oxlint --fix . && oxfmt --write --no-error-on-unmatched-pattern .",
     "format": "oxfmt --write --no-error-on-unmatched-pattern .",
     "check-types": "turbo run check-types",
-    "test": "pnpm --filter web test",
+    "test": "pnpm --filter web test && node --test tooling/setup/data-preset.test.mjs",
     "qa": "pnpm lint && pnpm check-types && pnpm test",
     "eval": "pnpm eval:offline && pnpm exec eve eval --tag smoke",
     "eval:offline": "node --import tsx apps/web/scripts/eval/eval-offline.ts",
