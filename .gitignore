@@ -81,4 +81,4 @@ __dev
 
 # Agent hosts: per-machine state
 .claude/worktrees/
-.claude/settings.local.json
+!.claude/settings.local.json
