@@ -73,7 +73,12 @@ __dev
 !.cursor/commands/
 !.cursor/commands/**
 !.cursor/hooks.json
+!.cursor/cli.json
 
 # Neon Local metadata
 .neon_local/
 .neon
+
+# Agent hosts: per-machine state
+.claude/worktrees/
+.claude/settings.local.json
