@@ -28,6 +28,7 @@ Then ask your agent to `/start` (or say "start a new project"): Flow's skills sh
 | `pnpm dev`            | Dev server via Portless                         |
 | `pnpm dev:app`        | Next.js only                                    |
 | `pnpm qa`             | Lint, types, tests                              |
+| `pnpm format`         | Format files in place (CI only checks)          |
 | `pnpm build`          | Production build                                |
 | `pnpm eval`           | Offline GenUI matrix + Eve smoke evals          |
 
