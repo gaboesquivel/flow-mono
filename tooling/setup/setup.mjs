@@ -1,7 +1,8 @@
-import { execSync } from "node:child_process";
+import { execSync, spawnSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { applyDataPreset, readDatabaseUrl, upsertEnvLine } from "./data-preset.mjs";
+import { removeStaleHooks } from "./stale-hooks.mjs";
 
 const root = path.join(import.meta.dirname, "..", "..");
 
@@ -32,6 +33,16 @@ ensureEnv({
   dest: path.join(root, "apps/web/.env.local"),
   example: path.join(root, "apps/web/.env.example"),
 });
+
+// Git hooks are gone (spec 048); remove a simple-git-hooks hook an older install left behind.
+const hooksDir = spawnSync("git", ["rev-parse", "--git-path", "hooks"], {
+  cwd: root,
+  encoding: "utf-8",
+});
+if (hooksDir.status === 0) {
+  for (const hook of removeStaleHooks(path.resolve(root, hooksDir.stdout.trim())))
+    console.log(`Removed stale ${hook} hook`);
+}
 
 // Skills are committed under .agents/skills; restore them from skills-lock.json only when missing.
 if (!existsSync(path.join(root, ".agents/skills")))

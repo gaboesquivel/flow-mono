@@ -10,7 +10,6 @@ overrides:
 allowBuilds:
   "@openuidev/lang-core": true
   esbuild: true
-  simple-git-hooks: true
 minimumReleaseAgeExclude:
   - "@ai-sdk/gateway@4.0.125"
   - "@ai-sdk/react@4.0.156"

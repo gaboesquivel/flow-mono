@@ -74,6 +74,7 @@ __dev
 !.cursor/commands/**
 !.cursor/hooks.json
 !.cursor/cli.json
+!.cursor/environment.json
 
 # Neon Local metadata
 .neon_local/
