@@ -6,12 +6,12 @@ The sections below describe **implemented behavior on `main`** shared with flow-
 
 ## Monorepo layout
 
-| Path                                  | Role                                                          |
-| ------------------------------------- | ------------------------------------------------------------- |
-| `apps/web`                            | Next.js app, MCP, GenUI Studio, HTTP APIs                     |
-| `packages/ui`                         | Shared shadcn components and tokens                           |
+| Path                                  | Role                                                                                        |
+| ------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `apps/web`                            | Next.js app, MCP, GenUI Studio, HTTP APIs                                                   |
+| `packages/ui`                         | Shared shadcn components and tokens                                                         |
 | `agents/assistant`, `agents/operator` | Eve workspace agents (`withEve` `eveRoot` = repository root); see [agents.md](../agents.md) |
-| `lib/agent-tools`                     | Shared Eve tool implementations (import `apps/web/lib/genui`) |
+| `lib/agent-tools`                     | Shared Eve tool implementations (import `apps/web/lib/genui`)                               |
 
 `packages/ts` may still be present; spec 005 PRD-6 removal is outstanding.
 
