@@ -46,6 +46,8 @@ Set `OPERATOR_SECRET` in the environment (minimum 16 characters). Call protected
 
 Cross-template contract: [docs/INTEROP.md](./docs/INTEROP.md).
 
+Eve runtime architecture: [docs/agents.md](./docs/agents.md).
+
 Agent skills: [docs/agent-skills.md](./docs/agent-skills.md).
 
 ## Deploy
