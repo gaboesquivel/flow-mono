@@ -38,3 +38,4 @@ Do the work yourself: CLI, then MCP, then API, then browser. Hand the user only 
 - Flow and stack skills are committed under `.agents/skills`; `.claude/skills` links to it. See [docs/agent-skills.md](docs/agent-skills.md).
 - Delivery: one draft pull request per spec on `spec/<number>-<slug>`. Drafts run no CI and no preview; marking it ready runs the checks (Flow `build` and `ship`).
 - No git hooks; secret and security checks run in ready-PR CI.
+- CI: the required `verify` check gates parallel `checks` and `build` jobs. Docs-only PRs (root or `docs/` Markdown, see `tooling/ci/change-scope.mjs`) run security and lint only. Pushes to `main` run `build` alone, to seed the pnpm and Next.js caches PRs restore.

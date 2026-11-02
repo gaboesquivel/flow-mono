@@ -5,28 +5,80 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened, ready_for_review]
+  # Seeds the pnpm store and Next.js build caches that pull requests restore
+  # (PR caches are branch-scoped). Runs `build` only; no checks re-run on main.
+  push:
+    branches: [main]
 
 concurrency:
   # Draft runs skip in their own group so a late one never cancels the ready run.
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.pull_request.draft }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
 
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
 jobs:
-  verify:
+  # security, lint, types, tests. Docs-only PRs (root or docs/ Markdown) run security and lint only.
+  checks:
     # Drafts run nothing; ready_for_review and later pushes run it (spec 048).
-    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && !github.event.pull_request.draft)
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-
+        with:
+          fetch-depth: 2 # merge commit and its base, for the change scope
+          filter: blob:none
+      - id: scope
+        run: node tooling/ci/change-scope.mjs
       - uses: ./.github/actions/setup-pnpm
-
       - run: pnpm security:check
-      - run: pnpm qa
+      - run: pnpm lint
+      - if: steps.scope.outputs.full == 'true'
+        run: pnpm check-types
       # Evals run on demand only (`pnpm eval`), never in CI.
-      # test already built the MCP App bundle; build only the Next.js app.
-      - run: pnpm --filter web exec next build --webpack
+      - if: steps.scope.outputs.full == 'true'
+        run: pnpm test
+
+  # MCP App bundle and Next.js production build, with the webpack cache restored.
+  build:
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 2
+          filter: blob:none
+      - id: scope
+        run: node tooling/ci/change-scope.mjs
+      - if: steps.scope.outputs.full == 'true'
+        uses: ./.github/actions/setup-pnpm
+      - if: steps.scope.outputs.full == 'true'
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: apps/web/.next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('apps/web/**', 'packages/**', 'lib/**', '!**/node_modules/**', '!apps/web/.next/**') }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            next-${{ runner.os }}-
+      - if: steps.scope.outputs.full == 'true'
+        run: pnpm --filter web build
+
+  # Required check: passes only when checks and build both succeed.
+  verify:
+    needs: [checks, build]
+    if: always() && github.event_name != 'push' && (github.event_name != 'pull_request' || !github.event.pull_request.draft)
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - env:
+          CHECKS: ${{ needs.checks.result }}
+          BUILD: ${{ needs.build.result }}
+        run: |
+          echo "checks=$CHECKS build=$BUILD"
+          [ "$CHECKS" = success ] && [ "$BUILD" = success ]
